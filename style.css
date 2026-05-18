@@ -1,0 +1,23 @@
+body {
+  background: #0d0d0d;
+  color: #e6e6e6;
+  font-family: monospace;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+pre {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
