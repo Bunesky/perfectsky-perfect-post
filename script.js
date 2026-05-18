@@ -29,6 +29,9 @@ async function init() {
     statsEl.textContent = generateStats(stats);
     perfectEl.textContent = generatePerfectPost(stats);
 
+    // ⭐ NUEVO: generar JSON automáticamente
+    savePerfectJSON(stats);
+
     statusEl.textContent = "Done";
 
   } catch (error) {
@@ -134,4 +137,25 @@ function generatePerfectPost(s) {
   if (s.avgHashtags >= 0.5) lines.push("• Hashtags: yes");
 
   return lines.join("\n");
+}
+
+// ⭐⭐⭐ NUEVO: generar perfect.json automáticamente ⭐⭐⭐
+function savePerfectJSON(stats) {
+  const perfect = {
+    characters: stats.avgChars,
+    words: stats.avgWords,
+    image: stats.imagePct >= 50 ? "yes" : "no",
+    video: stats.videoPct >= 50 ? "yes" : "no",
+    links: stats.linksPct >= 50 ? "yes" : "no",
+    hashtags: stats.avgHashtags >= 0.5 ? "yes" : "no"
+  };
+
+  const blob = new Blob([JSON.stringify(perfect, null, 2)], {
+    type: "application/json",
+  });
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "perfect.json";
+  a.click();
 }
