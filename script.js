@@ -29,9 +29,6 @@ async function init() {
     statsEl.textContent = generateStats(stats);
     perfectEl.textContent = generatePerfectPost(stats);
 
-    // ⭐ NUEVO: generar JSON automáticamente
-    savePerfectJSON(stats);
-
     statusEl.textContent = "Done";
 
   } catch (error) {
@@ -106,7 +103,7 @@ function analyze(posts) {
 function generateStats(s) {
   return `
 -----------------------------------------
-|   Style Analysis (last 24h)           |
+|   Style Analysis                      |
 -----------------------------------------
 
 Results:
