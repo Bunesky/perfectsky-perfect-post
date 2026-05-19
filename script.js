@@ -22,7 +22,9 @@ async function init() {
     if (!data.feed || data.feed.length === 0)
       throw new Error("Feed returned empty");
 
-    const posts = data.feed;
+    // CORRECCIÓN IMPORTANTE:
+    // getFeed devuelve item.post YA COMPLETO
+    const posts = data.feed.map(item => item.post);
 
     const stats = analyze(posts);
 
@@ -53,8 +55,7 @@ function analyze(posts) {
   let originals = 0;
   let quotes = 0;
 
-  for (const item of posts) {
-    const post = item.post;
+  for (const post of posts) {
     const text = post.record.text || "";
 
     totalChars += text.length;
@@ -62,7 +63,8 @@ function analyze(posts) {
     const words = text.trim().split(/\s+/).filter(Boolean);
     totalWords += words.length;
 
-    const hashtags = text.match(/#\w+/g) || [];
+    // Regex corregido
+    const hashtags = text.match(/#[a-zA-Z][a-zA-Z0-9_]+/g) || [];
     totalHashtags += hashtags.length;
 
     const embedType = post.embed?.$type || "";
@@ -78,7 +80,7 @@ function analyze(posts) {
 
     if (hasLink) withLinks++;
 
-    if (item.reply) replies++;
+    if (post.reply) replies++;
     else if (embedType.includes("record")) quotes++;
     else originals++;
   }
@@ -89,7 +91,7 @@ function analyze(posts) {
     total,
     avgChars: Math.round(totalChars / total),
     avgWords: Math.round(totalWords / total),
-    avgHashtags: (totalHashtags / total).toFixed(1),
+    avgHashtags: (totalHashtags / total).toFixed(2), // ← CORREGIDO
     imagePct: Math.round((withImage / total) * 100),
     videoPct: Math.round((withVideo / total) * 100),
     noMediaPct: Math.round((noMedia / total) * 100),
@@ -131,7 +133,7 @@ function generatePerfectPost(s) {
   if (s.imagePct >= 50) lines.push("• Image: yes");
   if (s.videoPct >= 50) lines.push("• Video: yes");
   if (s.linksPct >= 50) lines.push("• Links: yes");
-  if (s.avgHashtags >= 0.5) lines.push("• Hashtags: yes");
+  if (parseFloat(s.avgHashtags) >= 1) lines.push("• Hashtags: yes");
 
   return lines.join("\n");
 }
