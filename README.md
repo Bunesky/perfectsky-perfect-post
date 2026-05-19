@@ -9,9 +9,12 @@ PerfectSky Perfect Post analyzes the @bunesky Trending Feed and displays:
 - Post type distribution  
 - The calculated “Perfect Post” based on majority trends  
 
-### Related Projects
-• Analytics only: https://bunesky.github.io/perfectsky-post/  
-• Bot: https://github.com/Bunesky/perfectsky-post-bot
+### Related Projects — Bot Ecosystem  
+• Analytics: https://bunesky.github.io/perfectsky-post/  
+• Bot: https://github.com/Bunesky/perfectsky-post-bot  
+• Feed debug tool: https://bunesky.github.io/perfectsky-feed-debug/  
+
+
 
 ### Contact
 https://bsky.app/profile/bune.bsky.social
