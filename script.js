@@ -22,8 +22,8 @@ async function init() {
     if (!data.feed || data.feed.length === 0)
       throw new Error("Feed returned empty");
 
-    // CORRECCIÓN IMPORTANTE:
-    // getFeed devuelve item.post YA COMPLETO
+    // ✔ CORRECCIÓN CRÍTICA:
+    // Usamos SOLO el post real, igual que el bot PerfectSky Post Now
     const posts = data.feed.map(item => item.post);
 
     const stats = analyze(posts);
@@ -63,8 +63,11 @@ function analyze(posts) {
     const words = text.trim().split(/\s+/).filter(Boolean);
     totalWords += words.length;
 
-    // Regex corregido
-    const hashtags = text.match(/#[a-zA-Z][a-zA-Z0-9_]+/g) || [];
+    // ✔ Quitamos URLs para evitar hashtags falsos dentro de enlaces
+    const textWithoutUrls = text.replace(/https?:\/\/\S+/g, "");
+
+    // ✔ Regex estricta: hashtags reales
+    const hashtags = textWithoutUrls.match(/#[a-zA-Z][a-zA-Z0-9_]+/g) || [];
     totalHashtags += hashtags.length;
 
     const embedType = post.embed?.$type || "";
@@ -91,7 +94,7 @@ function analyze(posts) {
     total,
     avgChars: Math.round(totalChars / total),
     avgWords: Math.round(totalWords / total),
-    avgHashtags: (totalHashtags / total).toFixed(2), // ← CORREGIDO
+    avgHashtags: (totalHashtags / total).toFixed(2), // ✔ ahora sí: 0.00 si no hay hashtags
     imagePct: Math.round((withImage / total) * 100),
     videoPct: Math.round((withVideo / total) * 100),
     noMediaPct: Math.round((noMedia / total) * 100),
@@ -133,6 +136,8 @@ function generatePerfectPost(s) {
   if (s.imagePct >= 50) lines.push("• Image: yes");
   if (s.videoPct >= 50) lines.push("• Video: yes");
   if (s.linksPct >= 50) lines.push("• Links: yes");
+
+  // ✔ condición correcta: solo si el promedio ≥ 1 hashtag real
   if (parseFloat(s.avgHashtags) >= 1) lines.push("• Hashtags: yes");
 
   return lines.join("\n");
