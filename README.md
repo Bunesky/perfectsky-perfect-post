@@ -2,7 +2,7 @@
 Web App  
 https://bunesky.github.io/perfectsky-perfect-post/
 
-PerfectSky Perfect Post analyzes the @bunesky Trending Feed and displays:
+PerfectSky Perfect Post analyzes the Trending Feed and displays:
 
 - Key style metrics  
 - Media usage patterns  
@@ -14,6 +14,8 @@ PerfectSky Perfect Post analyzes the @bunesky Trending Feed and displays:
 • Bot: https://github.com/Bunesky/perfectsky-post-bot  
 • Feed debug tool: https://bunesky.github.io/perfectsky-feed-debug/  
 
+Bot Account
+https://bsky.app/profile/perfectskypost.bsky.social
 
 
 ### Contact
