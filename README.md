@@ -9,7 +9,6 @@ PerfectSky Perfect Post analyzes the Trending Feed and displays:
 - Post type distribution  
 - The calculated “Perfect Post” based on majority trends
 
-  This project provides a more detailed statistical breakdown than the public bot output.
 
 ### Related Projects — Bot Ecosystem  
 • Analytics: https://bunesky.github.io/perfectsky-post/  
